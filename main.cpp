@@ -35,21 +35,21 @@ int main(int argc, char** argv){
     }
   
     // Create an object of a STL data-structure to store all the movies
-
+    set<Movies> s;
     string line, movieName;
     double movieRating;
     // Read each file and store the name and rating
     while (getline (movieFile, line) && parseLine(line, movieName, movieRating)){
-            // Use std::string movieName and double movieRating
-            // to construct your Movie objects
-            // cout << movieName << " has rating " << movieRating << endl;
-            // insert elements into your data structure
+            Movies m(movieName, movieRating);
+            s.insert(m);
     }
 
     movieFile.close();
 
     if (argc == 2){
-            //print all the movies in ascending alphabetical order of movie names
+            for (const auto& movie: s) {
+                cout << movie << endl;
+            }
             return 0;
     }
 
@@ -70,6 +70,8 @@ int main(int argc, char** argv){
     //  For each prefix,
     //  Find all movies that have that prefix and store them in an appropriate data structure
     //  If no movie with that prefix exists print the following message
+    unordered_map<string, vector<string>> map;
+    
     cout << "No movies found with prefix "<<"<replace with prefix>" << endl;
 
     //  For each prefix,
