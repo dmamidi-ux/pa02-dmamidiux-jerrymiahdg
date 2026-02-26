@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Movies::Movies(string n, int r) : name(n), rating(r) {}
+Movies::Movies(string n, double r) : name(n), rating(r) {}
 
 bool Movies::operator<(const Movies& other) const {
     int b = name.compare(other.name);
@@ -12,7 +12,7 @@ bool Movies::operator<(const Movies& other) const {
     return false;
 }
 
-int Movies::getRating() const {
+double Movies::getRating() const {
     return rating;
 };
 string Movies::getName() const {

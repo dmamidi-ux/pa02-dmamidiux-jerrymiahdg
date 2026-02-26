@@ -4,8 +4,8 @@ using namespace std;
 
 class Movies {
     public:
-        Movies(string n, int r);
-        int getRating() const;
+        Movies(string n, double r);
+        double getRating() const;
         string getName() const;
 
         bool operator<(const Movies& other) const;
@@ -13,7 +13,7 @@ class Movies {
 
     private:
         string name;
-        int rating;
+        double rating;
 };
 
 ostream& operator<<(ostream& out, const Movies& c);

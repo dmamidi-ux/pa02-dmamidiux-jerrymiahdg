@@ -13,10 +13,23 @@
 #include <set>
 #include <queue>
 #include <sstream>
+#include <unordered_map>
 using namespace std;
 
 #include "utilities.h"
 #include "movies.h"
+
+struct minH {
+    bool operator()(const Movies& a, const Movies& b) const {
+        return b.getRating() < a.getRating();
+    }
+};
+
+struct maxH {
+    bool operator()(const Movies& a, const Movies& b) const {
+        return a.getRating() < b.getRating();
+    }
+};
 
 bool parseLine(string &line, string &movieName, double &movieRating);
 
@@ -70,14 +83,45 @@ int main(int argc, char** argv){
     //  For each prefix,
     //  Find all movies that have that prefix and store them in an appropriate data structure
     //  If no movie with that prefix exists print the following message
-    unordered_map<string, vector<string>> map;
+    unordered_map<string, priority_queue<Movies, vector<Movies>, maxH>> map;
+    vector<pair<string, Movies>> pre;
+    for (string p: prefixes) {
+        bool found = false;
+        bool mx = true;
+        int len = p.length();
+        for (const Movies& m: s) {
+            string name = m.getName();
+            if (name.length() >= len && name.substr(0, len) == p) {
+                map[p].push(m);
+                found = true;
+            }
+            else if (found) {
+                break;
+            }
+        }
+        // Fill in
+        if (!found) {
+            cout << "No movies found with prefix "<< p << endl;
+        }
+        else {
+            while (!map[p].empty()) {
+                Movies m = map[p].top();
+                cout << m << endl;
+                if (mx) {
+                    pre.push_back({p, m});
+                    mx = false;
+                }
+                map[p].pop();
+            }
+        }
+        if (found) cout << endl;
+    }
     
-    cout << "No movies found with prefix "<<"<replace with prefix>" << endl;
-
-    //  For each prefix,
-    //  Print the highest rated movie with that prefix if it exists.
-    cout << "Best movie with prefix " << "<replace with prefix>" << " is: " << "replace with movie name" << " with rating " << std::fixed << std::setprecision(1) << "replace with movie rating" << endl;
-
+    for(pair<string, Movies> p : pre) {
+        //  For each prefix,
+        //  Print the highest rated movie with that prefix if it exists.
+        cout << "Best movie with prefix " << p.first << " is: " << p.second.getName() << " with rating " << std::fixed << std::setprecision(1) << p.second.getRating() << endl;
+    }
     return 0;
 }
 
