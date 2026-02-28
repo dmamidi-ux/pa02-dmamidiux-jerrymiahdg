@@ -168,7 +168,8 @@ int main(int argc, char** argv){
 => Space Complexity is O(n + m*k)
 
 ~ ~ ~ Tradeoffs between time/space complexity ~ ~ ~
-We designed our algorithm for     
+I designed for a lower time complexity, and I was targeting a linearithmic time complexity and a space complexity as close to linear as I could.
+I was able to somewhat achieve a low space complexity; however, having an unordered_map with a heap as a value sacrificed some memory to be able to instantly access the highest rated movie and print them in sorted order.
 
 ~ ~ ~ Run Times: ~~~
 input_20_random.csv: 50.773 ms
