@@ -1,6 +1,6 @@
 // Winter'24
 // Instructor: Diba Mirza
-// Student name: 
+// Student name: Devesh Mamidi and Jeremiah De Guzman
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -46,6 +46,8 @@ int main(int argc, char** argv){
         cerr << "Could not open file " << argv[1];
         exit(1);
     }
+
+    clock_t start = clock();
   
     // Create an object of a STL data-structure to store all the movies
     set<Movies> s;
@@ -89,14 +91,20 @@ int main(int argc, char** argv){
         bool found = false;
         bool mx = true;
         int len = p.length();
-        for (const Movies& m: s) {
-            string name = m.getName();
+        auto it = s.lower_bound(Movies(p, 0.0));
+        while (it != s.end()) {
+            string name = it->getName();
+
             if (name.length() >= len && name.substr(0, len) == p) {
-                map[p].push(m);
+                map[p].push(*it);
                 found = true;
+                ++it;
             }
             else if (found) {
                 break;
+            }
+            else {
+                ++it;
             }
         }
         // Fill in
@@ -122,10 +130,26 @@ int main(int argc, char** argv){
         //  Print the highest rated movie with that prefix if it exists.
         cout << "Best movie with prefix " << p.first << " is: " << p.second.getName() << " with rating " << std::fixed << std::setprecision(1) << p.second.getRating() << endl;
     }
+    clock_t end = clock();
+    double ms = (double)(end - start) * 1000.0 / CLOCKS_PER_SEC;
+    cerr << "The running time is: " << ms << "ms";
     return 0;
 }
 
 /* Add your run time analysis for part 3 of the assignment here as commented block*/
+
+/*
+
+~ ~ ~ Time complexity: ~ ~ ~
+
+    
+~ ~ ~ Run Times: ~~~
+input_20_random.csv: 50.773 ms
+input_100_random.csv: 91.968 ms
+input_1000_random.csv: 332.165 ms
+input_76920_random.csv: 32432.5 ms
+
+*/
 
 bool parseLine(string &line, string &movieName, double &movieRating) {
     int commaIndex = line.find_last_of(",");
