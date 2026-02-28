@@ -19,15 +19,12 @@ using namespace std;
 #include "utilities.h"
 #include "movies.h"
 
-struct minH {
-    bool operator()(const Movies& a, const Movies& b) const {
-        return b.getRating() < a.getRating();
-    }
-};
-
 struct maxH {
     bool operator()(const Movies& a, const Movies& b) const {
-        return a.getRating() < b.getRating();
+        if (a.getRating() != b.getRating()) {
+            return a.getRating() < b.getRating(); 
+        }
+        return a.getName() > b.getName();
     }
 };
 
