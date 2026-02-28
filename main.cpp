@@ -141,6 +141,29 @@ int main(int argc, char** argv){
 /*
 
 ~ ~ ~ Time complexity: ~ ~ ~
+- Adding Movies to Set: O(nlog(n))
+    - Each insert() operation is max log(n)
+        - insert() operation is log(C) where C is size of set
+        - set has a max size of n because only adding of the n movies
+- Adding prefixes to vector: O(m)
+    - Each push_back operation is O(1)
+- For loop iterates through each prefix in prefix vector: O(m * (log(n) + klog(k)))
+    - For loop runs m times
+    - Find first item in set with prefix: O(log(n))
+    - Keep iterating forward in the set through each movie with the prefix (max k movies per prefix)
+        - Add movie to priority queue for corresponding prefix: O(log(k))
+    - Pop and print the top element of max heap until empty: O(klogk)
+- For loop iterates through vector with highest rating movie for each of m prefixes: O(k)
+
+=> Time Complexity is O(nlogn + m(logn + klogk))
+
+
+~ ~ ~ Space Complexity ~ ~ ~
+- Set to contain movies: O(n)
+- (String : Max-Heap) Map: O(m * k)
+    - m prefixes
+    - max k movies per prefix
+- Vector of highest rated movie per prefix: O(m)
 
     
 ~ ~ ~ Run Times: ~~~
