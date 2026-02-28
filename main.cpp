@@ -165,7 +165,11 @@ int main(int argc, char** argv){
     - max k movies per prefix
 - Vector of highest rated movie per prefix: O(m)
 
-    
+=> Space Complexity is O(n + m*k)
+
+~ ~ ~ Tradeoffs between time/space complexity ~ ~ ~
+We designed our algorithm for     
+
 ~ ~ ~ Run Times: ~~~
 input_20_random.csv: 50.773 ms
 input_100_random.csv: 91.968 ms
